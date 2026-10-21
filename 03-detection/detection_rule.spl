@@ -1,0 +1,20 @@
+/*
+Rule name   : T1059.001 - Suspicious PowerShell (Post-Phishing)
+MITRE ATT&CK: T1059.001 (Command and Scripting Interpreter: PowerShell)
+Data source : Sysmon Operational log, Event ID 1 (Process Create)
+Purpose     : Detect PowerShell launched with encoded/obfuscated/download-cradle
+              patterns, as seen after a phishing click.
+Alert config: Scheduled, cron */5 * * * *, trigger when Number of Results > 0,
+              trigger Once, action = Add to Triggered Alerts, severity High.
+Validation  : True positive  - fired on Atomic Red Team T1059.001 execution.
+              False positive - 0 results on Get-Process, Get-ChildItem,
+                               whoami, Get-Date.
+Notes       : The host filter is omitted so the rule applies to every endpoint.
+              AtomicRedTeam and SOAPHound are lab-specific test strings; remove
+              them in a production version.
+*/
+
+index=main source="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1
+Image="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+| regex CommandLine="(?i)(IEX|Invoke-Expression|-enc|-EncodedCommand|-nop|-NoProfile|DownloadString|AtomicRedTeam|SOAPHound)"
+| table _time, host, Image, CommandLine
