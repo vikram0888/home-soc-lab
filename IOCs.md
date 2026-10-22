@@ -28,17 +28,20 @@ Matched against Sysmon Event ID 1 (`CommandLine` field) where `Image` is `powers
 
 ## Network indicators
 
+### Network Indicators
+
 | Indicator | Context |
-|---|---|
-| `GET /?rid=3DujSF5ki HTTP/1.1` | GoPhish phishing-link click tracking parameter format |
-| `200 OK (text/html)` response immediately following the above | Landing page served successfully to the victim |
+|-----------|---------|
+| `GET /?rid=3Duj5F5ki HTTP/1.1` | GoPhish phishing-link click tracking parameter |
+| `200 OK (text/html)` response immediately following the above | Landing page successfully served to the victim |
 
-> Note: source/destination IPs in this lab are internal, lab-only addresses (private LAN ranges) and are not published here, consistent with the scrubbing practice described in the main README.
-
+> Note: Source and destination IPs in this lab are internal, lab-only addresses (private LAN ranges) and are not published here.
 
 
 ## MITRE ATT&CK mapping
 
-| Technique ID | Name | Observed sub-behaviors in this lab |
-|---|---|
-| T1059.001 | Command and Scripting Interpreter: PowerShell | Encoded commands, fileless download cradles, credential dumping, AD recon tool execution |
+### MITRE ATT&CK Mapping
+
+| Technique ID | Name | Observed in this lab |
+|--------------|------|----------------------|
+| **T1059.001** | Command and Scripting Interpreter: PowerShell | Encoded commands, fileless download cradles, credential dumping, AD recon tool execution |
